@@ -1,0 +1,800 @@
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(foreign)
+> file.choose()
+[1] "Z:\\Blokus\\Data Files and Analysis\\MRS_Role_Activity_July 13_2020.sav"
+> dataset=read.spss("Z:\\Blokus\\Data Files and Analysis\\MRS_Role_Activity_July 13_2020.sav",to.data.frame=TRUE)
+re-encoding from UTF-8
+There were 50 or more warnings (use warnings() to see the first 50)
+> View(dataset)
+> describe(dataset$Total_Neutral)
+Error in describe(dataset$Total_Neutral) : 
+  could not find function "describe"
+> library(psych)
+Warning message:
+package ‘psych’ was built under R version 4.0.2 
+> describe(dataset$Total_Neutral)
+   vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 89 8.96 3.42      9    9.08 2.97   0  16    16 -0.35    -0.41 0.36
+> describe(dataset$Total_Feminine,Total_Masculine,Total_Neutral)
+Error in describe(dataset$Total_Feminine, Total_Masculine, Total_Neutral) : 
+  object 'Total_Masculine' not found
+> describe(dataset$total_feminine,dataset$Total_Masculine,dataset$Total_Neutral)
+Error in interp.quantiles(x, q = 0.5, w, na.rm = na.rm) : 
+  The data must be either a vector, a matrix, or a data.frame
+In addition: Warning messages:
+1: In if (!na.rm) x <- na.omit(x) :
+  the condition has length > 1 and only the first element will be used
+2: In mean.default(x, na.rm = na.rm) :
+  argument is not numeric or logical: returning NA
+3: In if (na.rm) "na.or.complete" else "everything" :
+  the condition has length > 1 and only the first element will be used
+4: In if (interp) { :
+  the condition has length > 1 and only the first element will be used
+> desrcibe(dataset$Total_Feminine)
+Error in desrcibe(dataset$Total_Feminine) : 
+  could not find function "desrcibe"
+> describe(dataset$Total_Feminine)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 89 3.38 2.64      3    3.08 2.97   0  13    13 1.18     1.53 0.28
+> describeData(dataset$Total_Feminine)
+Error in matrix(NA, nrow = nvar, ncol = 2) : non-numeric matrix extent
+> describe.by(dataset$Total_Feminine)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 89 3.38 2.64      3    3.08 2.97   0  13    13 1.18     1.53 0.28
+Warning messages:
+1: describe.by is deprecated.  Please use the describeBy function 
+2: In describeBy(x = x, group = group, mat = mat, type = type, ...) :
+  no grouping variable requested
+> describeBy(dataset$Total_Feminine)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 89 3.38 2.64      3    3.08 2.97   0  13    13 1.18     1.53 0.28
+Warning message:
+In describeBy(dataset$Total_Feminine) : no grouping variable requested
+> describe(dataset$Total_Masculine)
+   vars  n  mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 89 12.38 6.38     12   12.22 5.93   0  35    35 0.44     0.62 0.68
+> describe(dataset$Total_Neutral)
+   vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 89 8.96 3.42      9    9.08 2.97   0  16    16 -0.35    -0.41 0.36
+> female<-subset(dataset,Sex=="Female")
+> male<-subset(dataset,Sex=="Male")
+> 
+> describe(female$Total_Feminine)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 47  4.4 2.89      4    4.15 2.97   0  13    13 0.89     0.44 0.42
+> describe(female$Total_Masculine)
+   vars  n  mean  sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 47 10.26 4.9     10   10.36 4.45   0  20    20 -0.17    -0.42 0.71
+> describe(female$Total_Neutral)
+   vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 47 8.72 3.14      9    8.87 2.97   2  15    13 -0.36    -0.59 0.46
+> describe(male$Total_Feminine)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 42 2.24 1.72      2    2.09 1.48   0   7     7 0.67        0 0.27
+> describe(male$Total_Masculine)
+   vars  n  mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 42 14.76 7.03     15   14.62 5.93   2  35    33 0.24     0.13 1.08
+> describe(dataset$Total_Neutral)
+   vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 89 8.96 3.42      9    9.08 2.97   0  16    16 -0.35    -0.41 0.36
+> describe(male$Total_Neutral)
+   vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 42 9.21 3.73     10    9.35 3.71   0  16    16 -0.39    -0.47 0.58
+> file.choose()
+[1] "Z:\\Blokus\\Data Files and Analysis\\UT_noAct_selected_67-updated July-14-2020.sav"
+> dataset2<-read.spss(Z:\\Blokus\\Data Files and Analysis\\UT_noAct_selected_67-updated July-14-2020.sav",to.data.frame=TRUE)
+Error: unexpected input in "dataset2<-read.spss(Z:\"
+> dataset2<-read.spss("Z:\\Blokus\\Data Files and Analysis\\UT_noAct_selected_67-updated July-14-2020.sav",to.data.frame=TRUE)
+re-encoding from UTF-8
+> View(dataset2)
+> describe(dataset2$nomale)
+   vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 100 10.9 6.75     11   10.49 7.41   0  35    35 0.63     0.37 0.67
+> describe(dataset2$nofem)
+   vars   n mean  sd median trimmed  mad min max range skew kurtosis   se
+X1    1 100 5.92 4.3      5    5.68 4.45   0  16    16 0.47    -0.86 0.43
+> describe(dataset2$noneu)
+   vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 100 6.07 4.08      6    5.85 5.19   0  16    16 0.35    -0.81 0.41
+> female2<-subset(dataset2,Sex=="female")
+> male2<-subset(dataset2,Sex=="male")
+> dataset2<-read.spss(Z:\\Blokus\\Data Files and Analysis\\UT_noAct_selected_67-updated July-14-2020.sav",to.data.frame=TRUE)
+Error: unexpected input in "dataset2<-read.spss(Z:\"
+> dataset2<-read.spss('Z:\\Blokus\\Data Files and Analysis\\UT_noAct_selected_67-updated July-14-2020.sav",to.data.frame=TRUE)
++ 
++ dataset2<-read.spss("Z:\\Blokus\\Data Files and Analysis\\UT_noAct_selected_67-updated July-14-2020.sav",to.data.frame=TRUE)
++ ''
++ 
++ 
++ 
++ 
++ file.choose
++ file.choose()
++ ''
+Error: unexpected string constant in:
+"file.choose()
+'"
+> dataset2<-read.spss("Z:\\Blokus\\Data Files and Analysis\\UT_noAct_selected_67-updated July-14-2020.sav",to.data.frame=TRUE)
+re-encoding from UTF-8
+> female2<-subset(dataset2,Sex=="female")
+> male2<-subset(dataset2,Sex=="male")
+> View(dataset2)
+> describe(female2$nofem)
+   vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 52 7.92 3.97    8.5    7.93 5.19   0  16    16 -0.02    -0.95 0.55
+> describe(female2$nomale)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 52  8.4 5.13      7    8.31 5.93   0  21    21 0.26    -0.65 0.71
+> describe(female2$noneu)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 52 5.27 3.25    5.5    5.12 3.71   0  12    12 0.24    -0.91 0.45
+> describe(female2$MrtSco)
+   vars  n  mean   sd median trimmed mad min max range skew kurtosis   se
+X1    1 52 27.48 7.12     28   27.45 8.9  14  40    26 0.02    -1.29 0.99
+> describe(male2$nofem)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 48 3.75 3.54      3     3.3 2.97   0  16    16 1.35     1.53 0.51
+> describe(male2$nomale)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 48 13.6 7.28   13.5    13.3 8.15   2  35    33 0.38     -0.1 1.05
+> describe(male2$noneu)
+   vars  n mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 48 6.94 4.71      7    6.82 5.93   0  16    16 0.11    -1.25 0.68
+> describe(male2$MrtSco)
+   vars  n  mean   sd median trimmed  mad min max range skew kurtosis   se
+X1    1 48 30.23 5.98   30.5   30.58 8.15  16  39    23 -0.4    -0.97 0.86
+> describe(dataset2$MrtSco)
+   vars   n mean   sd median trimmed  mad min max range  skew kurtosis   se
+X1    1 100 28.8 6.71   29.5   29.05 9.64  14  40    26 -0.22    -1.15 0.67
+> save.image("~/MRS/MRS File.RData")
+> male_femAct<-subset(male, Field_Hockey & Figure_Skating & Baton_Twirling_1 & Baton_Twirling_2 & Water_Ballet & Gymnastics & Ballet_1 & Ballet_2 & Tap_dancing & Disco_Dancing & Pottery & Embroidery & Crochet & Knitting_1 & Knitting_2 & Patchwork & Sewing & Touch_Typing & Sketching_Clothes )
+There were 18 warnings (use warnings() to see them)
+> View(male_femAct)
+> View(male)
+> View(male_femAct)
+> View(male)
+> View(male_femAct)
+> male_femAct<-male["Field_Hockey",  "Figure_Skating", "Baton_Twirling_1",  "Baton_Twirling_2",  "Water_Ballet",  "Gymnastics",  "Ballet_1",  "Ballet_2",  "Tap_dancing",  "Disco_Dancing",  "Pottery",  "Embroidery  Crochet",  "Knitting_1",  "Knitting_2",  "Patchwork",  "Sewing",  "Touch_Typing",  "Sketching_Clothes"]
+Error in `[.data.frame`(male, "Field_Hockey", "Figure_Skating", "Baton_Twirling_1",  : 
+  unused arguments ("Baton_Twirling_2", "Water_Ballet", "Gymnastics", "Ballet_1", "Ballet_2", "Tap_dancing", "Disco_Dancing", "Pottery", "Embroidery  Crochet", "Knitting_1", "Knitting_2", "Patchwork", "Sewing", "Touch_Typing", "Sketching_Clothes")
+> male_femAct<-male["Field_Hockey", "FIgure_Skating"]
+> View(male_femAct)
+> male_femAct<-male[c("Field_Hockey", "FIgure_Skating")]
+Error in `[.data.frame`(male, c("Field_Hockey", "FIgure_Skating")) : 
+  undefined columns selected
+> male_femAct<-male[c("Field_Hockey", "Figure_Skating")]
+> View(male_femAct)
+> male_femAct<-male[c("Field_Hockey", "Figure_Skating", "Baton_Twirling_1", "Baton_Twirling_2","Water_Ballet",  "Gymnastics",  "Ballet_1",  "Ballet_2",  "Tap_dancing",  "Disco_Dancing",  "Pottery",  "Embroidery  Crochet",  "Knitting_1",  "Knitting_2",  "Patchwork",  "Sewing",  "Touch_Typing",  "Sketching_Clothes") ]
+Error in `[.data.frame`(male, c("Field_Hockey", "Figure_Skating", "Baton_Twirling_1",  : 
+  undefined columns selected
+> View(male)
+> male_femAct<-male[c("Field_Hockey", "Figure_Skating", "Baton_Twirling_1", "Baton_Twirling_2","Water_Ballet",  "Gymnastics",  "Ballet_1",  "Ballet_2",  "Tap_dancing",  "Disco_Dancing",  "Pottery",  "Embroidery",  "Crochet",  "Knitting_1",  "Knitting_2",  "Patchwork",  "Sewing",  "Touch_Typing",  "Sketching_Clothes") ]
+> View(male_femAct)
+> female_femAct<-female[c("Field_Hockey", "Figure_Skating", "Baton_Twirling_1", "Baton_Twirling_2","Water_Ballet",  "Gymnastics",  "Ballet_1",  "Ballet_2",  "Tap_dancing",  "Disco_Dancing",  "Pottery",  "Embroidery",  "Crochet",  "Knitting_1",  "Knitting_2",  "Patchwork",  "Sewing",  "Touch_Typing",  "Sketching_Clothes") ]
+> View(female_femAct)
+> male_maleAct<-male[c("Touch_football", "Tackle_Football","Baseball", "Basketball", "Ice_Hockey","Racquetball_2","Soccer","Squah","Darts","Archery","Golf", "Horseshoes", "Target_shooting", "Rock_Climbing","Hunting","Canoeing", "Sledding","Skiing_1","Skiing_2","Skateboarding","Fencing","High_Jumping","Pole_vaulting","Billiards","Foosball","Airhockey","Glassblowing","Model_Trains","GoCarts","Model_Planes","Juggling","Compass","Mechanical_Drawing","Car_Repair","Electrical_repair","Carpentry","FIxing_Radios","Plumbing","Sketching_Audios","Sketching_Houses")]
+> 
+> female_maleAct<-female[c("Touch_football", "Tackle_Football","Baseball", "Basketball", "Ice_Hockey","Racquetball_2","Soccer","Squah","Darts","Archery","Golf", "Horseshoes", "Target_shooting", "Rock_Climbing","Hunting","Canoeing", "Sledding","Skiing_1","Skiing_2","Skateboarding","Fencing","High_Jumping","Pole_vaulting","Billiards","Foosball","Airhockey","Glassblowing","Model_Trains","GoCarts","Model_Planes","Juggling","Compass","Mechanical_Drawing","Car_Repair","Electrical_repair","Carpentry","FIxing_Radios","Plumbing","Sketching_Audios","Sketching_Houses")]
+> male_neuAct<-male[C("Softball","Bowling","Tennis","Ping_Pong","Volleyball","Raquetball","Dodgeball","Jumping_Horses","Diving","Frisbee","Jewelry","Drawing","Painting","Leather_Work","Sculpting", "Weaving", "Photography", "Navigation","Newspaper", "Marching_Band"
++ )]
+Error in C("Softball", "Bowling", "Tennis", "Ping_Pong", "Volleyball",  : 
+  object not interpretable as a factor
+> male_neuAct<-male[C("Softball","Bowling","Tennis","Ping_Pong","Volleyball","Racquetball","Dodgeball","Jumping_Horses","Diving","Frisbee","Jewelry","Drawing","Painting","Leather_Work","Sculpting", "Weaving", "Photography", "Navigation","Newspaper", "Marching_Band")]
+Error in C("Softball", "Bowling", "Tennis", "Ping_Pong", "Volleyball",  : 
+  object not interpretable as a factor
+> male_neuAct<-male[C("Softball","Bowling")]
+Error in C("Softball", "Bowling") : object not interpretable as a factor
+> male_neuAct<-male[c("Softball","Bowling","Tennis","Ping_Pong","Volleyball","Racquetball","Dodgeball","Jumping_Horses","Diving","Frisbee","Jewelry","Drawing","Painting","Leather_Work","Sculpting", "Weaving", "Photography", "Navigation","Newspaper", "Marching_Band")]
+> female_neuAct<-female[c("Softball","Bowling","Tennis","Ping_Pong","Volleyball","Racquetball","Dodgeball","Jumping_Horses","Diving","Frisbee","Jewelry","Drawing","Painting","Leather_Work","Sculpting", "Weaving", "Photography", "Navigation","Newspaper", "Marching_Band")]
+> counts<- table(male_femAct$Field_Hockey, female_femAct$Field_Hockey)
+Error in table(male_femAct$Field_Hockey, female_femAct$Field_Hockey) : 
+  all arguments must have the same length
+> sum_malefemAct<-colsums(male_femAct)
+Error in colsums(male_femAct) : could not find function "colsums"
+> sum_malefemAct<-colSums(male_femAct)
+Error in colSums(male_femAct) : 'x' must be numeric
+> sum_malefemAct<-colSums(male_femAct, as.numeric)
+Error in colSums(male_femAct, as.numeric) : invalid 'na.rm' argument
+> sum_malefemAct<-colSums(sapply(male_femAct), as.numeric)
+Error in match.fun(FUN) : argument "FUN" is missing, with no default
+> load(dplyr)
+Error in load(dplyr) : object 'dplyr' not found
+> install.packages("dplyr")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/hanna/Documents/R/win-library/4.0’
+(as ‘lib’ is unspecified)
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/dplyr_1.0.0.zip'
+Content type 'application/zip' length 1302941 bytes (1.2 MB)
+downloaded 1.2 MB
+
+package ‘dplyr’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\hanna\AppData\Local\Temp\RtmpIvmVEa\downloaded_packages
+> load(dplyr)
+Error in load(dplyr) : object 'dplyr' not found
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package ‘dplyr’ was built under R version 4.0.2 
+> male_femAct<- male_femAct %>% mutate_if(is.factor,as.numeric)
+> sum_malefemAct<-colsums(male_femAct)
+Error in colsums(male_femAct) : could not find function "colsums"
+> sum_malefemAct<-colSums(male_femAct)
+> sum_malefemAct
+     Field_Hockey    Figure_Skating  Baton_Twirling_1  Baton_Twirling_2 
+               43                47                44                43 
+     Water_Ballet        Gymnastics          Ballet_1          Ballet_2 
+               42                50                42                43 
+      Tap_dancing     Disco_Dancing           Pottery        Embroidery 
+               46                52                51                45 
+          Crochet        Knitting_1        Knitting_2         Patchwork 
+               44                45                44                44 
+           Sewing      Touch_Typing Sketching_Clothes 
+               49                65                53 
+> male_femAct[male_femAct==1]<-0
+> male_femAct[male_femAct==2]<-1
+> sum_malefemAct<-colsums(male_femAct)
+Error in colsums(male_femAct) : could not find function "colsums"
+> sum_malefemAct<-colSums(male_femAct)
+> sum_malefemAct
+     Field_Hockey    Figure_Skating  Baton_Twirling_1  Baton_Twirling_2 
+                1                 5                 2                 1 
+     Water_Ballet        Gymnastics          Ballet_1          Ballet_2 
+                0                 8                 0                 1 
+      Tap_dancing     Disco_Dancing           Pottery        Embroidery 
+                4                10                 9                 3 
+          Crochet        Knitting_1        Knitting_2         Patchwork 
+                2                 3                 2                 2 
+           Sewing      Touch_Typing Sketching_Clothes 
+                7                23                11 
+> female_femAct<- female_femAct %>% mutate_if(is.fact,as.numeric)
+Error in is_logical(.p) : object 'is.fact' not found
+> female_femAct<- female_femAct %>% mutate_if(is.factor,as.numeric)
+> female_femAct[female_femAct==1]<-0
+> female_femAct[female_femAct==2]<-1
+> sum_femaleFemact<- colSums(female_femAct)
+> sum_femaleFemact
+     Field_Hockey    Figure_Skating  Baton_Twirling_1  Baton_Twirling_2 
+                4                11                 4                 2 
+     Water_Ballet        Gymnastics          Ballet_1          Ballet_2 
+                2                18                22                15 
+      Tap_dancing     Disco_Dancing           Pottery        Embroidery 
+               14                11                 8                10 
+          Crochet        Knitting_1        Knitting_2         Patchwork 
+                3                 9                 9                 6 
+           Sewing      Touch_Typing Sketching_Clothes 
+               18                28                13 
+> barplot(sum_malefemAct,sum_femaleFemact, Main="Female Activities", xlab="activities", col=c("female", "Male"), legend= rownames(sum_femaleFemact),besides=TRUE)
+Error in rect(y1, x1, y2, x2, ...) : invalid color name 'female'
+In addition: Warning messages:
+1: In plot.window(xlim, ylim, log = log, ...) :
+  "Main" is not a graphical parameter
+2: In plot.window(xlim, ylim, log = log, ...) :
+  "besides" is not a graphical parameter
+> barplot(sum_malefemAct,sum_femaleFemact, Main="Female Activities", xlab="activities", col=c("blue", "red"), legend= rownames(sum_femaleFemact),beside=TRUE)
+Warning messages:
+1: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+2: In doTryCatch(return(expr), name, parentenv, handler) :
+  "besides" is not a graphical parameter
+3: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+4: In doTryCatch(return(expr), name, parentenv, handler) :
+  "besides" is not a graphical parameter
+5: In plot.window(xlim, ylim, log = log, ...) :
+  "Main" is not a graphical parameter
+6: In axis(if (horiz) 2 else 1, at = at.l, labels = names.arg, lty = axis.lty,  :
+  "Main" is not a graphical parameter
+7: In title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...) :
+  "Main" is not a graphical parameter
+8: In axis(if (horiz) 1 else 2, cex.axis = cex.axis, ...) :
+  "Main" is not a graphical parameter
+> View(dataset2)
+There were 50 or more warnings (use warnings() to see the first 50)
+> barplot(sum_malefemAct,sum_femaleFemact, main="Female Activities", xlab="activities", col=c("blue", "red"), legend= rownames(sum_femaleFemact),beside=TRUE)
+> View(female2)
+> library(ggplot2)
+
+Attaching package: ‘ggplot2’
+
+The following objects are masked from ‘package:psych’:
+
+    %+%, alpha
+
+> View(male)
+> str(male)
+'data.frame':	42 obs. of  293 variables:
+ $ SurveyDuration_seconds       : num  738 998 665 1223 534 ...
+ $ SurveyDate                   : num  1.36e+10 1.36e+10 1.36e+10 1.36e+10 1.36e+10 ...
+ $ Sex                          : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Name                         : chr  "samuel de la Cruz-Munoz" "Talib McNorton         " "Rohit Vinod            " "Gabriel Fernandez      " ...
+ $ AgeYears                     : chr  "19" "18" "20" "20" ...
+ $ Householdsize                : chr  "3 " "3 " "3 " "2 " ...
+ $ Married                      : Factor w/ 2 levels "Yes","No": 2 2 2 2 2 2 2 2 2 2 ...
+ $ CommonHomeLanguage           : chr  "english " "english " "English " "Spanish " ...
+ $ OtherHomeLanguages           : chr  "none                                                       " "N/a                                                        " "Malayalam                                                  " "English                                                    " ...
+ $ Major                        : chr  "recreational sports management          " "communication arts                      " "Biology/Chemistry                       " "Psychology                              " ...
+ $ GPA                          : chr  "3.7  " "2.55 " "3.4  " "3.87 " ...
+ $ Ethnicity                    : Factor w/ 2 levels "Yes, Spanish/Hispanic/Latino",..: 1 2 2 1 1 2 1 1 1 1 ...
+ $ Q10_AmericanIndian           : Factor w/ 1 level "American Indian or Alaskan Native": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q10_Asian                    : Factor w/ 1 level "Asian": NA NA 1 NA NA NA 1 NA NA NA ...
+ $ Q10_Black                    : Factor w/ 1 level "Black or African American": NA 1 NA NA NA NA NA NA NA NA ...
+ $ Q10_Hawaiian                 : Factor w/ 1 level "Native Hawaiian or Other Pacific Islander": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q10_White                    : Factor w/ 1 level "White": 1 NA NA NA 1 1 NA 1 1 NA ...
+ $ Q10_Other                    : Factor w/ 1 level "Other -": NA NA NA 1 NA NA NA NA NA 1 ...
+ $ Q10_6_TEXT                   : chr  "                          " "                          " "                          " "Hispanic                  " ...
+ $ Race_combined                : num  5 3 2 6 5 5 2 5 5 6 ...
+ $ Q11_Professional             : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, accountant, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_HigherAdministrator      : Factor w/ 1 level "Higher Administrator (banker, executive, high government official, union official)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Management               : Factor w/ 1 level "Management": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Clerical                 : Factor w/ 1 level "Clerical (clerk, office manager, secretary, bookkeeper)": NA NA NA NA NA 1 NA NA NA NA ...
+ $ Q11_Sales                    : Factor w/ 1 level "Sales (sales manager, shop owner, shop assistant, buyer, insurance agent)": NA NA NA NA NA NA NA NA 1 NA ...
+ $ Q11_Service                  : Factor w/ 1 level "Service (restaurant owner, policeman, barber, janitor)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Skilled                  : Factor w/ 1 level "Skilled worker (foreman, motor mechanic, printer, seamstress, tool and die maker, electrician)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_SemiSkilled              : Factor w/ 1 level "Semi-skilled (bricklayer, bus driver, tannery worker, carpenter, sheet, metal worker, baker)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Unskilled                : Factor w/ 1 level "Unskilled (laborer, porter, unskilled factory worker)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Farm                     : Factor w/ 1 level "Farm (farmer, farm laborer, tractor driver)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Homemaker                : Factor w/ 1 level "Homemaker": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Unemployed               : Factor w/ 1 level "Unemployed": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q11_Student                  : Factor w/ 1 level "Student": 1 1 1 1 1 1 1 1 1 NA ...
+ $ Q11_Other                    : Factor w/ 1 level "Other -": NA NA NA NA NA NA NA NA NA 1 ...
+ $ Q11_Text                     : chr  "                                       " "                                       " "                                       " "                                       " ...
+ $ Occupation_combined          : num  13 13 13 13 13 NA 13 13 NA 6 ...
+ $ Q12_Professional             : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_HigherAdministrator      : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Management               : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Clerical                 : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Sales                    : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Service                  : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Skilled                  : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_SemiSkilled              : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Unskilled                : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Farm                     : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Homemaker                : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Unemployed               : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_Other                    : Factor w/ 1 level "Professional (doctor, teacher, engineer, artist, account, lawyer)": NA NA NA NA NA NA NA NA NA NA ...
+ $ Q12_13_TEXT                  : chr  "                    " "                    " "                    " "                    " ...
+ $ Spouse_occupation            : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ Q13_Education                : Factor w/ 7 levels "Less than high school",..: 2 3 3 4 4 4 2 2 4 4 ...
+ $ Q14_SpouseEducation          : Factor w/ 7 levels "Less than high school",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ Q15_Income                   : Factor w/ 6 levels "Less than $15,000",..: 4 2 5 5 5 4 6 4 3 2 ...
+ $ Q42_SpatialAnxiety1          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 1 2 2 2 2 2 3 ...
+ $ Q42_SpatialAnxiety2          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 2 1 2 2 1 2 3 3 2 ...
+ $ Q42_SpatialAnxiety3          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 1 2 1 2 2 2 1 ...
+ $ Q42_SpatialAnxiety4          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 3 1 2 3 3 3 2 ...
+ $ Q42_SpatialAnxiety5          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 2 1 1 3 3 2 3 ...
+ $ Q42_SpatialAnxiety6          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 2 1 1 2 2 1 3 ...
+ $ Q42_SpatialAnxiety7          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 2 2 1 3 2 1 2 ...
+ $ Q42_SpatialAnxiety8          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 1 2 2 2 2 2 1 ...
+ $ Q42_SpatialAnxiety9          : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 3 2 2 2 1 2 3 3 3 ...
+ $ Q42_SpatialAnxiety10         : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 3 1 1 1 1 1 3 1 2 2 ...
+ $ Q42_SpatialAnxiety11         : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 3 1 2 1 3 1 1 1 1 3 ...
+ $ Q42_SpatialAnxiety12         : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 1 3 2 1 1 1 1 1 1 2 ...
+ $ Q42_SpatialAnxiety13         : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 2 2 1 1 3 1 1 ...
+ $ Q42_SpatialAnxiety14         : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 2 1 1 1 1 1 3 1 1 ...
+ $ Q42_SpatialAnxiety15         : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 1 1 1 2 1 2 3 1 1 ...
+ $ Q42_SpatialAnxiety16         : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It would not bother me much.",..: 2 2 1 1 2 1 2 4 2 2 ...
+ $ Q42_mean                     : num  2.06 1.44 1.19 1.5 1.69 ...
+ $ Q50_GeneralizedAnxiety1      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 1 2 1 1 2 2 1 ...
+ $ Q50_GeneralizedAnxiety2      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 3 3 1 1 2 3 2 3 2 2 ...
+ $ Q50_GeneralizedAnxiety3      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 2 1 2 1 1 1 2 3 1 1 ...
+ $ Q50_GeneralizedAnxiety4      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 3 2 2 1 1 2 3 3 3 1 ...
+ $ Q50_GeneralizedAnxiety5      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 2 3 1 1 2 3 3 2 3 2 ...
+ $ Q50_GeneralizedAnxiety6      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 2 1 1 1 2 3 1 2 1 ...
+ $ Q50_GeneralizedAnxiety7      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 2 2 1 1 2 3 2 3 1 1 ...
+ $ Q50_GeneralizedAnxiety8      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 2 1 1 1 1 2 2 2 1 1 ...
+ $ Q50_GeneralizedAnxiety9      : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 1 1 2 2 1 1 1 ...
+ $ Q50_GeneralizedAnxiety10     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 3 2 2 2 3 2 3 3 3 ...
+ $ Q50_GeneralizedAnxiety11     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 1 1 1 2 1 1 1 ...
+ $ Q50_GeneralizedAnxiety12     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 2 1 1 1 1 1 1 1 1 1 ...
+ $ Q50_GeneralizedAnxiety13     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 2 2 1 1 1 1 2 1 1 1 ...
+ $ Q50_GeneralizedAnxiety14     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 1 2 2 3 3 2 1 ...
+ $ Q50_GeneralizedAnxiety15     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 2 1 1 2 1 2 2 1 1 ...
+ $ Q50_GeneralizedAnxiety16     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 2 1 1 1 1 1 1 1 ...
+ $ Q50_GeneralizedAnxiety17     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 2 1 2 2 2 2 1 1 ...
+ $ Q50_GeneralizedAnxiety18     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 2 2 1 3 1 1 1 ...
+ $ Q50_GeneralizedAnxiety19     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 1 1 1 2 1 1 1 ...
+ $ Q50_GeneralizedAnxiety20     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ Q50_GeneralizedAnxiety21     : Factor w/ 4 levels "NOT AT ALL","MILDLY -- It did not bother me much.",..: 1 1 1 1 2 1 1 1 1 1 ...
+ $ Q50_mean                     : num  1.48 1.52 1.24 1.1 1.48 ...
+ $ Q21_StrategyRating1          : num  1 0 5 7 2 4 5 3 1 6 ...
+ $ Q21_StrategyRating2          : num  1 6 0 4 5 4 3 3 6 2 ...
+ $ Q21_StrategyRating3          : num  1 0 7 5 3 7 6 6 0 1 ...
+ $ Q21_StrategyRating4          : num  2 3 0 0 3 7 1 5 0 1 ...
+ $ Q21_StrategyRating5          : num  2 2 7 7 6 1 3 5 0 6 ...
+ $ Q21_StrategyRating6          : num  2 0 0 3 4 3 4 6 0 4 ...
+  [list output truncated]
+> str(male_femAct)
+'data.frame':	42 obs. of  19 variables:
+ $ Field_Hockey     : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Figure_Skating   : num  0 0 1 0 0 0 0 0 0 0 ...
+ $ Baton_Twirling_1 : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Baton_Twirling_2 : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Water_Ballet     : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Gymnastics       : num  0 0 0 0 0 0 0 1 0 1 ...
+ $ Ballet_1         : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Ballet_2         : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Tap_dancing      : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Disco_Dancing    : num  0 0 1 0 0 0 0 0 0 0 ...
+ $ Pottery          : num  0 1 0 1 0 0 0 1 0 0 ...
+ $ Embroidery       : num  0 0 0 0 0 0 0 1 0 0 ...
+ $ Crochet          : num  0 1 0 0 0 0 0 0 0 0 ...
+ $ Knitting_1       : num  0 0 0 0 0 0 0 0 1 0 ...
+ $ Knitting_2       : num  0 0 0 0 0 0 0 0 1 0 ...
+ $ Patchwork        : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Sewing           : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ Touch_Typing     : num  0 1 1 0 1 1 1 0 0 1 ...
+ $ Sketching_Clothes: num  0 1 0 0 0 0 1 0 0 0 ...
+> dataset_neuAct<-dataset[c("Softball","Bowling","Tennis","Ping_Pong","Volleyball","Racquetball","Dodgeball","Jumping_Horses","Diving","Frisbee","Jewelry","Drawing","Painting","Leather_Work","Sculpting", "Weaving", "Photography", "Navigation","Newspaper", "Marching_Band")]
+> View(dataset2)
+> View(dataset_neuAct)
+> sum_malefemAct
+     Field_Hockey    Figure_Skating  Baton_Twirling_1 
+                1                 5                 2 
+ Baton_Twirling_2      Water_Ballet        Gymnastics 
+                1                 0                 8 
+         Ballet_1          Ballet_2       Tap_dancing 
+                0                 1                 4 
+    Disco_Dancing           Pottery        Embroidery 
+               10                 9                 3 
+          Crochet        Knitting_1        Knitting_2 
+                2                 3                 2 
+        Patchwork            Sewing      Touch_Typing 
+                2                 7                23 
+Sketching_Clothes 
+               11 
+> sum_femaleFemact
+     Field_Hockey    Figure_Skating  Baton_Twirling_1 
+                4                11                 4 
+ Baton_Twirling_2      Water_Ballet        Gymnastics 
+                2                 2                18 
+         Ballet_1          Ballet_2       Tap_dancing 
+               22                15                14 
+    Disco_Dancing           Pottery        Embroidery 
+               11                 8                10 
+          Crochet        Knitting_1        Knitting_2 
+                3                 9                 9 
+        Patchwork            Sewing      Touch_Typing 
+                6                18                28 
+Sketching_Clothes 
+               13 
+> femAct<- matrix(c(4,11,4,2,2,18,22,15,14,11,8,10,3,9,9,6,18,28,1,5,2,1,0,8,0,1,4,10,9,3,2,3,2,2,7,23,11)ncol=19,byrow=TRUE)
+Error: unexpected symbol in "femAct<- matrix(c(4,11,4,2,2,18,22,15,14,11,8,10,3,9,9,6,18,28,1,5,2,1,0,8,0,1,4,10,9,3,2,3,2,2,7,23,11)ncol"
+> femAct<- matrix(c(4,11,4,2,2,18,22,15,14,11,8,10,3,9,9,6,18,28,1,5,2,1,0,8,0,1,4,10,9,3,2,3,2,2,7,23,11),ncol=19,byrow=TRUE)
+Warning message:
+In matrix(c(4, 11, 4, 2, 2, 18, 22, 15, 14, 11, 8, 10, 3, 9, 9,  :
+  data length [37] is not a sub-multiple or multiple of the number of rows [2]
+> femAct<- matrix(c(4,11,4,2,2,18,22,15,14,11,8,10,3,9,9,6,18,28,13,1,5,2,1,0,8,0,1,4,10,9,3,2,3,2,2,7,23,11),ncol=19,byrow=TRUE)
+> colname(femAct)<-c("Field Hockey", "Figure Skating", "Baton Twirling 1", "Baton Twirling 2","Water Ballet",  "Gymnastics",  "Ballet 1",  "Ballet 2",  "Tap Dancing",  "Disco Dancing",  "Pottery",  "Embroidery",  "Crochet",  "Knitting 1",  "Knitting 2",  "Patchwork",  "Sewing",  "Touch Typing",  "Sketching Clothes")
+Error in colname(femAct) <- c("Field Hockey", "Figure Skating", "Baton Twirling 1",  : 
+  could not find function "colname<-"
+> colnames(femAct)<-c("Field Hockey", "Figure Skating", "Baton Twirling 1", "Baton Twirling 2","Water Ballet",  "Gymnastics",  "Ballet 1",  "Ballet 2",  "Tap Dancing",  "Disco Dancing",  "Pottery",  "Embroidery",  "Crochet",  "Knitting 1",  "Knitting 2",  "Patchwork",  "Sewing",  "Touch Typing",  "Sketching Clothes")
+> rowname(femAct)<-c("Female","Male")
+Error in rowname(femAct) <- c("Female", "Male") : 
+  could not find function "rowname<-"
+> rownames(femAct)<-c("Female","Male")
+> femAct<- as.table(femAct)
+> femAct
+       Field Hockey Figure Skating Baton Twirling 1
+Female            4             11                4
+Male              1              5                2
+       Baton Twirling 2 Water Ballet Gymnastics Ballet 1
+Female                2            2         18       22
+Male                  1            0          8        0
+       Ballet 2 Tap Dancing Disco Dancing Pottery Embroidery
+Female       15          14            11       8         10
+Male          1           4            10       9          3
+       Crochet Knitting 1 Knitting 2 Patchwork Sewing
+Female       3          9          9         6     18
+Male         2          3          2         2      7
+       Touch Typing Sketching Clothes
+Female           28                13
+Male             23                11
+> rownames(femAct)<-sex=c("Female","Male")
+Error in rownames(femAct) <- sex = c("Female", "Male") : 
+  could not find function "<-<-"
+> as.data.frame.matrix(femAct)
+       Field Hockey Figure Skating Baton Twirling 1 Baton Twirling 2 Water Ballet Gymnastics Ballet 1
+Female            4             11                4                2            2         18       22
+Male              1              5                2                1            0          8        0
+       Ballet 2 Tap Dancing Disco Dancing Pottery Embroidery Crochet Knitting 1 Knitting 2 Patchwork Sewing
+Female       15          14            11       8         10       3          9          9         6     18
+Male          1           4            10       9          3       2          3          2         2      7
+       Touch Typing Sketching Clothes
+Female           28                13
+Male             23                11
+> ggplot(data=femAct, aes(x=row(femAct),y=col(femAct),fill=supp)+geom_bar(stat="identity", position=position_dodge())
++ ''
+Error: unexpected string constant in:
+"ggplot(data=femAct, aes(x=row(femAct),y=col(femAct),fill=supp)+geom_bar(stat="identity", position=position_dodge())
+''"
+> ggplot(data=femAct,fill=supp)+geom_bar(stat="identity", position=position_dodge())
+Error: `data` must be a data frame, or other object coercible by `fortify()`, not an S3 object with class table
+Run `rlang::last_error()` to see where the error occurred.
+In addition: Warning messages:
+1: In doTryCatch(return(expr), name, parentenv, handler) :
+  display list redraw incomplete
+2: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+3: In doTryCatch(return(expr), name, parentenv, handler) :
+  invalid graphics state
+> View(dataset2)
+> View(dataset2)
+> calculated_variables_dataset2<-dataset2[c("MrtSco", "nofem", "nomale", "noneu")]
+> View(calculated_variables_dataset2)
+> calculated_variables_dataset2<-dataset2[c("Sex",MrtSco", "nofem", "nomale", "noneu")]
+Error: unexpected string constant in "calculated_variables_dataset2<-dataset2[c("Sex",MrtSco", ""
+> calculated_variables_dataset2<-dataset2[c("Sex","MrtSco", "nofem", "nomale", "noneu")]
+> str(calculated_variables_dataset2)
+'data.frame':	100 obs. of  5 variables:
+ $ Sex   : Factor w/ 2 levels "female","male": 2 1 1 1 1 1 1 1 2 1 ...
+ $ MrtSco: num  35 29 37 34 30 23 29 36 23 33 ...
+ $ nofem : num  9 4 11 12 4 12 9 15 11 7 ...
+ $ nomale: num  15 1 20 11 7 12 6 10 18 7 ...
+ $ noneu : num  4 2 10 6 1 5 1 6 2 12 ...
+> bargraph_base<-ggplot(data=calculated_variables_dataset2,aes(x=nofem))
+> View(bargraph_base)
+Warning messages:
+1: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+2: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+3: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+4: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+5: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+6: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+7: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+8: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+> bargraph_base<-ggplot(data=calculated_variables_dataset2,aes(x=nofem,fill=Sex))
+> baragraph_base + geom_bar(stat="count")
+Error: object 'baragraph_base' not found
+> bargraph_base + geom_bar(stat="count")
+> bargraph_base<-ggplot(data=calculated_variables_dataset2,aes(x=mean(nofem),fill=Sex))
+> bargraph_base
+> View(dataset_neuAct)
+> View(dataset_neuAct)
+> View(dataset2)
+> bargraph_base<-ggplot(data=calculated_variables_dataset2,aes(x=nofem,fill=Sex))
+> baragraph_base
+Error: object 'baragraph_base' not found
+> bargraph_base
+> baragraph_base + geom_bar(stat="count")
+Error: object 'baragraph_base' not found
+> bargraph_base + geom_bar(stat="count")
+> View(dataset2)
+> ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=cyl)) + geom_point()
+Error in FUN(X[[i]], ...) : object 'cyl' not found
+> ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=Sex)) + geom_point()
+> ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=Sex, color=Sex)) + geom_point()
+> ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,fullrange=TRUE)
+`geom_smooth()` using formula 'y ~ x'
+> ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,fullrange=TRUE)
+`geom_smooth()` using formula 'y ~ x'
+> ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE)
+`geom_smooth()` using formula 'y ~ x'
+> > ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE) 
+Error: unexpected '>' in ">"
+> ggplot(data=calculated_variables_dataset2, aes(x=nofem, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE) 
+`geom_smooth()` using formula 'y ~ x'
+> ggplot(data=calculated_variables_dataset2, aes(x=noneu, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE) 
+`geom_smooth()` using formula 'y ~ x'
+> save.image("~/MRS/MRS.RData")
+There were 12 warnings (use warnings() to see them)
+> warnings()
+Warning messages:
+1: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+2: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+3: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+4: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+5: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+6: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+7: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+8: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+9: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+10: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+11: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+12: In doTryCatch(return(expr), name, parentenv, handler) :
+  "Main" is not a graphical parameter
+> ggplot(data=calculated_variables_dataset2, aes(x=noneu, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE)+labs(x="Mean Score on Mental Rotation Task", y="Number of Neutral Sex-typed Activities")
+`geom_smooth()` using formula 'y ~ x'
+> ggplot(data=calculated_variables_dataset2, aes(x=noneu, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE)+labs(y="Mean Score on Mental Rotation Task", x="Number of Neutral Sex-typed Activities")
+`geom_smooth()` using formula 'y ~ x'
+> ggplot(data=calculated_variables_dataset2, aes(x=nomale, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE)+labs(y="Mean Score on Mental Rotation Task", x="Number of Male Sex-typed Activities")
+`geom_smooth()` using formula 'y ~ x'
+> ggplot(data=calculated_variables_dataset2, aes(x=nofem, y=MrtSco, shape=Sex, color=Sex)) + geom_point()+geom_smooth(method=lm,se=FALSE,fullrange=TRUE)+labs(y="Mean Score on Mental Rotation Task", x="Number of Female Sex-typed Activities")
+`geom_smooth()` using formula 'y ~ x'
+> install.packages("Hmisc")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/hanna/Documents/R/win-library/4.0’
+(as ‘lib’ is unspecified)
+also installing the dependencies ‘stringi’, ‘highr’, ‘markdown’, ‘xfun’, ‘png’, ‘jpeg’, ‘stringr’, ‘knitr’, ‘checkmate’, ‘Formula’, ‘latticeExtra’, ‘acepack’, ‘gridExtra’, ‘htmlTable’, ‘viridis’
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/stringi_1.4.6.zip'
+Content type 'application/zip' length 15217051 bytes (14.5 MB)
+downloaded 14.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/highr_0.8.zip'
+Content type 'application/zip' length 48647 bytes (47 KB)
+downloaded 47 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/markdown_1.1.zip'
+Content type 'application/zip' length 188732 bytes (184 KB)
+downloaded 184 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/xfun_0.15.zip'
+Content type 'application/zip' length 229776 bytes (224 KB)
+downloaded 224 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/png_0.1-7.zip'
+Content type 'application/zip' length 336667 bytes (328 KB)
+downloaded 328 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/jpeg_0.1-8.1.zip'
+Content type 'application/zip' length 335130 bytes (327 KB)
+downloaded 327 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/stringr_1.4.0.zip'
+Content type 'application/zip' length 216792 bytes (211 KB)
+downloaded 211 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/knitr_1.29.zip'
+Content type 'application/zip' length 1436757 bytes (1.4 MB)
+downloaded 1.4 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/checkmate_2.0.0.zip'
+Content type 'application/zip' length 699101 bytes (682 KB)
+downloaded 682 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/Formula_1.2-3.zip'
+Content type 'application/zip' length 181272 bytes (177 KB)
+downloaded 177 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/latticeExtra_0.6-29.zip'
+Content type 'application/zip' length 2202024 bytes (2.1 MB)
+downloaded 2.1 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/acepack_1.4.1.zip'
+Content type 'application/zip' length 94614 bytes (92 KB)
+downloaded 92 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/gridExtra_2.3.zip'
+Content type 'application/zip' length 1109106 bytes (1.1 MB)
+downloaded 1.1 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/htmlTable_2.0.1.zip'
+Content type 'application/zip' length 386094 bytes (377 KB)
+downloaded 377 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/viridis_0.5.1.zip'
+Content type 'application/zip' length 1866831 bytes (1.8 MB)
+downloaded 1.8 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/Hmisc_4.4-0.zip'
+Content type 'application/zip' length 3158003 bytes (3.0 MB)
+downloaded 3.0 MB
+
+package ‘stringi’ successfully unpacked and MD5 sums checked
+package ‘highr’ successfully unpacked and MD5 sums checked
+package ‘markdown’ successfully unpacked and MD5 sums checked
+package ‘xfun’ successfully unpacked and MD5 sums checked
+package ‘png’ successfully unpacked and MD5 sums checked
+package ‘jpeg’ successfully unpacked and MD5 sums checked
+package ‘stringr’ successfully unpacked and MD5 sums checked
+package ‘knitr’ successfully unpacked and MD5 sums checked
+package ‘checkmate’ successfully unpacked and MD5 sums checked
+package ‘Formula’ successfully unpacked and MD5 sums checked
+package ‘latticeExtra’ successfully unpacked and MD5 sums checked
+package ‘acepack’ successfully unpacked and MD5 sums checked
+package ‘gridExtra’ successfully unpacked and MD5 sums checked
+package ‘htmlTable’ successfully unpacked and MD5 sums checked
+package ‘viridis’ successfully unpacked and MD5 sums checked
+package ‘Hmisc’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\hanna\AppData\Local\Temp\RtmpIvmVEa\downloaded_packages
+> correlations<-rcorr(as.matrix(calculated_variables_dataset2))
+Error in rcorr(as.matrix(calculated_variables_dataset2)) : 
+  could not find function "rcorr"
+> library(Hmisc)
+Loading required package: lattice
+Loading required package: survival
+Loading required package: Formula
+
+Attaching package: ‘Hmisc’
+
+The following objects are masked from ‘package:dplyr’:
+
+    src, summarize
+
+The following object is masked from ‘package:psych’:
+
+    describe
+
+The following objects are masked from ‘package:base’:
+
+    format.pval, units
+
+Warning message:
+package ‘Hmisc’ was built under R version 4.0.2 
+> correlations<-rcorr(as.matrix(calculated_variables_dataset2))
+Error in rcorr(as.matrix(calculated_variables_dataset2)) : 
+  NA/NaN/Inf in foreign function call (arg 1)
+In addition: Warning message:
+In storage.mode(x) <- "double" : NAs introduced by coercion
+> correlations<-rcorr(calculated_variables_dataset2)
+Error in storage.mode(x) <- "double" : 
+  'list' object cannot be coerced to type 'double'
+> matrixcvd2<-calculated_variables_dataset2%>%mutate_if(is.factor,as.numeric)
+> View(matrixcvd2)
+> correlations<-rcorr(as.matrix(matrixcvd2))
+> correlations
+         Sex MrtSco nofem nomale noneu
+Sex     1.00   0.21 -0.49   0.39  0.21
+MrtSco  0.21   1.00  0.17   0.23  0.22
+nofem  -0.49   0.17  1.00   0.25  0.06
+nomale  0.39   0.23  0.25   1.00  0.58
+noneu   0.21   0.22  0.06   0.58  1.00
+
+n= 100 
+
+
+P
+       Sex    MrtSco nofem  nomale noneu 
+Sex           0.0402 0.0000 0.0000 0.0406
+MrtSco 0.0402        0.0855 0.0220 0.0296
+nofem  0.0000 0.0855        0.0115 0.5672
+nomale 0.0000 0.0220 0.0115        0.0000
+noneu  0.0406 0.0296 0.5672 0.0000       
+> save.image("~/MRS/MRS.RData")
+> correlationmatrix<-rcorr(as.matrix(matrixcvd2))
+> View(correlations)
+> 
