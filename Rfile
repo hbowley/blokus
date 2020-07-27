@@ -798,3 +798,962 @@ noneu  0.0406 0.0296 0.5672 0.0000
 > correlationmatrix<-rcorr(as.matrix(matrixcvd2))
 > View(correlations)
 > 
+
+
+
+
+
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> load("~/MRS/MRS.RData")
+> View(bargraph_base)
+> nofem.sex<-split(calculated_variables_dataset2$MrtSco, calculated_variables_dataset2$Sex)
+> View(nofem.sex)
+> MRT.sex<-split(calculated_variables_dataset2$MrtSco, calculated_variables_dataset2$Sex)
+> > View(nofem.sex)
+Error: unexpected '>' in ">"
+> View(MRT.sex)
+> boxplot(MRT.Sex,col="lavender")
+Error in boxplot(MRT.Sex, col = "lavender") : object 'MRT.Sex' not found
+> MRT.sex<-split(calculated_variables_dataset2$MrtSco, calculated_variables_dataset2$Sex)
+> boxplot(MRT.Sex,col="lavender")
+Error in boxplot(MRT.Sex, col = "lavender") : object 'MRT.Sex' not found
+> boxplot(MRT.sex,col="lavender")
+> MRT.sex.mean<-sapply(MRT.sex, mean)
+> View(nofem.sex)
+> View(MRT.sex)
+> barplot(MRT.sex.mean,col="beige")
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package ‘dplyr’ was built under R version 4.0.2 
+> library(ggplot2)
+> MRT.sex.mean<- calculated_variables_dataset2%>%
++ group_by(Sex)%>%
++ summarise(MRTSco=Mean(MRTSco))
+Error: Problem with `summarise()` input `MRTSco`.
+x could not find function "Mean"
+i Input `MRTSco` is `Mean(MRTSco)`.
+i The error occured in group 1: Sex = "female".
+Run `rlang::last_error()` to see where the error occurred.
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ group_by(Sex)%>%
++ summarise(MRTSco=mean(MRTSco))
+Error: Problem with `summarise()` input `MRTSco`.
+x object 'MRTSco' not found
+i Input `MRTSco` is `mean(MRTSco)`.
+i The error occured in group 1: Sex = "female".
+Run `rlang::last_error()` to see where the error occurred.
+> rlang::last_error()
+<error/dplyr_error>
+Problem with `summarise()` input `MRTSco`.
+x object 'MRTSco' not found
+i Input `MRTSco` is `mean(MRTSco)`.
+i The error occured in group 1: Sex = "female".
+Backtrace:
+  1. dplyr::group_by(., Sex)
+  9. dplyr::summarise(., MRTSco = mean(MRTSco))
+ 11. dplyr:::summarise_cols(.data, ...)
+Run `rlang::last_trace()` to see the full context.
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++     + group_by(Sex)%>%
++     + summarise(MrtSco=mean(MrtSco))
+Error in group_by(Sex) : object 'Sex' not found
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ group_by(calculated_variables_dataset2$Sex)%>%
++ summarise(MrtSco=mean(MrtSco))
+`summarise()` ungrouping output (override with `.groups` argument)
+> View(MRT.sex.mean)
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ group_by(Sex)%>%
++ summarise(MrtSco=mean(MrtSco))
+`summarise()` ungrouping output (override with `.groups` argument)
+> ggplot(MRT.sex.mean, aes(x=Sex, y=MrtSco)) + geom_bar(stat="identity")
+> ggplot(MRT.sex.mean, aes(x=Sex, y=MrtSco)) + geom_bar(stat="identity") 
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++     + group_by(calculated_variables_dataset2$Sex)%>%
++     + summarise(MrtSco=mean(MrtSco))%>%
++ ''
+Error in call2(call, dot_sym) : attempt to use zero-length variable name
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ + group_by(calculated_variables_dataset2$Sex)%>%
++ ''
+Error in UseMethod("group_by_") : 
+  no applicable method for 'group_by_' applied to an object of class "factor"
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ group_by(calculated_variables_dataset2$Sex)%>%
++ summarise(MrtSco=mean(MrtSco))%>%
++ summarise(MrtSco=stderr(MrtSco))
+`summarise()` ungrouping output (override with `.groups` argument)
+Error: Problem with `summarise()` input `MrtSco`.
+x unused argument (MrtSco)
+i Input `MrtSco` is `stderr(MrtSco)`.
+Run `rlang::last_error()` to see where the error occurred.
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ group_by(calculated_variables_dataset2$Sex)%>%
++ summarise(MrtSco=mean(MrtSco))%>%
++ summarise(MrtSco=stderr(MrtSco,na.rm))
+`summarise()` ungrouping output (override with `.groups` argument)
+Error: Problem with `summarise()` input `MrtSco`.
+x unused arguments (MrtSco, na.rm)
+i Input `MrtSco` is `stderr(MrtSco, na.rm)`.
+Run `rlang::last_error()` to see where the error occurred.
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ summarise(MrtSco=mean(MrtSco))%>%
++ summarise(SE=stderr(MrtSco,na.rm))
+Error: Problem with `summarise()` input `SE`.
+x unused arguments (MrtSco, na.rm)
+i Input `SE` is `stderr(MrtSco, na.rm)`.
+Run `rlang::last_error()` to see where the error occurred.
+> e <- function(x, ...) sqrt(var(x, ...)/length(x))
+> MRT.sex.mean<-calculated_variables_dataset2%>%
++ summarise(MrtSco=mean(MrtSco))%>%
++ summarise(SE=e(MrtSco))
+> e(calculated_variables_dataset2$MrtSco)
+[1] 0.6711967
+> View(calculated_variables_dataset2)
+> cds<-summarySE(calculated_variables_dataset2,measurevar=c("MrtSco","nofem","nomale","noneu"), groupvars="Sex")
+Error in summarySE(calculated_variables_dataset2, measurevar = c("MrtSco",  : 
+  could not find function "summarySE"
+> install.packages("Rmisc")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/hanna/Documents/R/win-library/4.0’
+(as ‘lib’ is unspecified)
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.0/Rmisc_1.5.zip'
+Content type 'application/zip' length 52378 bytes (51 KB)
+downloaded 51 KB
+
+package ‘Rmisc’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\hanna\AppData\Local\Temp\RtmpWshBJh\downloaded_packages
+> library(Rmisc)
+Loading required package: lattice
+Loading required package: plyr
+----------------------------------------------------------------------------
+You have loaded plyr after dplyr - this is likely to cause problems.
+If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+library(plyr); library(dplyr)
+----------------------------------------------------------------------------
+
+Attaching package: ‘plyr’
+
+The following objects are masked from ‘package:dplyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+Warning messages:
+1: package ‘Rmisc’ was built under R version 4.0.2 
+2: package ‘plyr’ was built under R version 4.0.2 
+> cds<-summarySE(calculated_variables_dataset2,measurevar=c("MrtSco","nofem","nomale","noneu"), groupvars="Sex")
+Error in is.data.frame(x) : 
+  'list' object cannot be coerced to type 'double'
+In addition: Warning message:
+In mean.default(xx[, col], na.rm = na.rm) :
+  argument is not numeric or logical: returning NA
+> cds
+Error: object 'cds' not found
+> ds<-summarySE(calculated_variables_dataset2,measurevar=("MrtSco"), groupvars="Sex")
+> View(ds)
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(),stat="identity")+geom+errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: object 'geom' not found
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(),stat="identity")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ ylab('Mean Score on Mental Rotation Task') + scale_fill_manual(values=c("firebrick1", "lightskyblue"), guide = FALSE) + scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> > ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in ">"
+> > ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ ylab('Mean Score on Mental Rotation Task') +  scale_y_continuous(expand = c(0,0)) +
+Error: unexpected '>' in ">"
+>     +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                          +                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '=' in:
+"    +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
+                                                         +                                                    axis.line ="
+>                                                          +                                                    axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    legend.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                         +                                                    legend.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                         +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))"
+> > 
+Error: unexpected '>' in ">"
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> > ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in ">"
+> > ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ ylab('Mean Score on Mental Rotation Task') + scale_fill_manual(values=c("firebrick1", "lightskyblue"), guide = FALSE) + scale_y_continuous(expand = c(0,0)) +
+Error: unexpected '>' in ">"
+>     +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                          +                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '=' in:
+"    +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
+                                                         +                                                    axis.line ="
+>                                                          +                                                    axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    legend.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                         +                                                    legend.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                         +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))"
+> > 
+Error: unexpected '>' in ">"
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> > ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in ">"
+> > ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ ylab('Mean Score on Mental Rotation Task') + scale_fill_manual(values=c("firebrick1", "lightskyblue"), guide = FALSE) + scale_y_continuous(expand = c(0,0)) +
+Error: unexpected '>' in ">"
+>     +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                          +                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '=' in:
+"    +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
+                                                         +                                                    axis.line ="
+>                                                          +                                                    axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    legend.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                         +                                                    legend.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                         +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))"
+> > 
+Error: unexpected '>' in ">"
+> ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> > ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ ylab('Mean Score on Mental Rotation Task') + scale_fill_manual(values=c("firebrick1", "lightskyblue"), guide = FALSE) + scale_y_continuous(expand = c(0,0)) +
+Error: unexpected '>' in ">"
+>     +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                          +                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '=' in:
+"    +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
+                                                         +                                                    axis.line ="
+>                                                          +                                                    axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    legend.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                         +                                                    legend.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                         +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))"
+> > 
+Error: unexpected '>' in ">"
+>     > ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in "    >"
+> > > ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in ">"
+> ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> > ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ ylab('Mean Score on Mental Rotation Task') + scale_fill_manual(values=c("firebrick1", "lightskyblue"), guide = FALSE) + scale_y_continuous(expand = c(0,0)) +
+Error: unexpected '>' in ">"
+>     +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                          +                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '=' in:
+"    +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
+                                                         +                                                    axis.line ="
+>                                                          +                                                    axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    legend.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                         +                                                    legend.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                         +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))"
+> > 
+Error: unexpected '>' in ">"
+>     > ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in "    >"
+> > > ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in ">"
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> > > ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+Error: unexpected '>' in ">"
+> ggplot(ds,aes(x=Sex, y=MrtSco, fill=Sex))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity", colour="dark grey")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))
+> 
+> ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ylab('Mean Score on Mental Rotation Task')+ theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                                                                                                                                                                                                                                                              axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                                                                                                                                                                                                                                              axis.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                              axis.title = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                              legend.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                              legend.title = element_text(size = 10, colour = "black"),
++                                                                                                                                                                                                                                                                                              plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> 
+> mentalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9))+xlab('')+ylab('Mean Score on Mental Rotation Task'))+scale_fill_manual(values= c("lightskyblue", "firebrick2"), guide=FALSE)+scale_y_continuous(expand = c(0,0))+theme_set(theme_light(base_size = 20))+ theme(panel.border = element_blank(), panel.grid.major = element_blank(),    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected ')' in "entalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position"
+>                                                                                                                                                                                                                                                                                                                                                                                                                             axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                                             axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                                             legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                                             legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                                             plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                                                                                                                                                            plot"
+> 
+> mentalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity")+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9)+xlab('')+ylab('Mean Score on Mental Rotation Task'))+scale_fill_manual(values= c("lightskyblue", "firebrick2"), guide=FALSE)+scale_y_continuous(expand = c(0,0))+theme_set(theme_light(base_size = 20))+ theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                                                                                                                                                             axis.title = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                                                                                                                                                             legend.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                                                                                                                                                             legend.title = element_text(size = 10, colour = "black"),
++                                                                                                                                                                                                                                                                                                                                                                                                                             plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: Cannot add ggproto objects together. Did you forget to add this object to a ggplot object?
+Run `rlang::last_error()` to see where the error occurred.
+> 
+> mentalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity",colour="dark grey")+xlab('')+ylab('Mean Score on Mental Rotation Task'))+scale_fill_manual(values= c("lightskyblue", "firebrick2"), guide=FALSE)+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9)+scale_y_continuous(expand = c(0,0))+theme_set(theme_light(base_size = 20))+ theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"),axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"),  legend.title = element_text(size = 10, colour = "black")
+Error: unexpected ')' in "mentalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity",colour="dark grey")+xlab('')+ylab('Mean Score on Mental Rotation Task'))"
+> 
+>  
+> mentalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity",colour="dark grey")+xlab('')+ylab('Mean Score on Mental Rotation Task')+scale_fill_manual(values= c("lightskyblue", "firebrick2"), guide=FALSE)+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9)+scale_y_continuous(expand = c(0,0))+theme_set(theme_light(base_size = 20))+ theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"),axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"),  legend.title = element_text(size = 10, colour = "black")
++ entalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity",colour="dark grey")+xlab('')+ylab('Mean Score on Mental Rotation Task')+scale_fill_manual(values= c("lightskyblue", "firebrick2"), guide=FALSE)+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9)+scale_y_continuous(expand = c(0,0))+theme_set(theme_light(base_size = 20))+ theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"),axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"),  legend.title = element_text(size = 10, colour = "black"'
+Error: unexpected symbol in:
+"r = "grey"), axis.text = element_text(size = 10, colour = "black"),axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"),  legend.titl
+entalrotationplot"
+> entalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity",colour="dark grey")+xlab('')+ylab('Mean Score on Mental Rotation Task')+scale_fill_manual(values= c("lightskyblue", "firebrick2"), guide=FALSE)+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9)+scale_y_continuous(expand = c(0,0))+theme_set(theme_light(base_size = 20))+ theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"),axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"),  legend.title = element_text(size = 10, colour = "black"))
++ 
++ ''
+Error: unexpected string constant in:
+"
+''"
+> ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task') +
++     ggtitle("") + 
++     scale_fill_manual(values=c("firebrick1", "lightskyblue"), guide = FALSE) +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> mrtplot->ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task') +
++     ggtitle("") + 
++     scale_fill_manual(values=c("firebrick2", "blue"), guide = FALSE) +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: object 'mrtplot' not found
+> 
+> Mrtplot<-ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     +     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     +     xlab('') + ylab('Mean Score on Mental Rotation Task') +
++     +     ggtitle("") + 
++     +     scale_fill_manual(values=c("firebrick2", "blue"), guide = FALSE) +
++     +     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                         +                   position=position_dodge(.9), colour = "dark grey") +
+Error: unexpected '=' in:
+"    +     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
+                        +                   position="
+>     +     scale_y_continuous(expand = c(0,0)) +
++     +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                          +                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '=' in:
+"    +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
+                                                         +                                                    axis.line ="
+>                                                          +                                                    axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    legend.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                         +                                                    legend.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                         +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))"
+> ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task') +
++     ggtitle("") + 
++     scale_fill_manual(values=c("firebrick2", "blue"), guide = FALSE) +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    
++ ''
++ ''
+Error: unexpected string constant in:
+"''
+''"
+> ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task') +
++     ggtitle("") + 
++     scale_fill_manual(values=c("firebrick2", "blue"), guide = FALSE) +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> MRT.plot<-ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task') +
++     ggtitle("") + 
++     scale_fill_manual(values=c("firebrick2", "blue"), guide = FALSE) +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> MRT.plot
+> View(MRT.plot)
+> View(MRT.plot)
+> View(MRT.sex)
+> View(MRT.sex.mean)
+> View(nofem.sex)
+> View(MRT.sex.mean)
+> View(MRT.sex)
+> View(ds)
+> datalong<-melt(data=calculated_variables_dataset2, measure.vars=c("noneu","nofem", "nomale"),variable.name="Activities")names(datalong)[names(data_long)=="value"]<-"Mean Number of Activities"
+Error: unexpected symbol in "datalong<-melt(data=calculated_variables_dataset2, measure.vars=c("noneu","nofem", "nomale"),variable.name="Activities")names"
+> data_long <- melt(data=data, id.var="MrtSco",
++                   measure.vars=c("noneu", "mofem", "nomale"),
++                   variable.name="Activities")
+Error in melt(data = data, id.var = "MrtSco", measure.vars = c("noneu",  : 
+  could not find function "melt"
+> names(data_long)[names(data_long)=="value"] <- "Mean Number of Activities"
+Error in names(data_long)[names(data_long) == "value"] <- "Mean Number of Activities" : 
+  object 'data_long' not found
+> library(reshape2)
+Warning message:
+package ‘reshape2’ was built under R version 4.0.2 
+> data_long <- melt(data=data, id.var="MrtSco",
++                   measure.vars=c("noneu", "nofem", "nomale"),
++                   variable.name="Activities")
+> names(data_long)[names(data_long)=="value"] <- "Mean Number of Activities"
+> data_long$Shape <- NA
+Error in `$<-.data.frame`(`*tmp*`, Shape, value = NA) : 
+  replacement has 1 row, data has 0
+> data_long$Shape[grepl("Male",  data_long$Activities)] <- "Male"
+> data_long$Shape[grepl("^Square", data_long$Activities)] <- "Female"
+> data_long$Shape <- factor(data_long$Shape)
+> data_long$Shape <- NA
+Error in `$<-.data.frame`(`*tmp*`, Shape, value = NA) : 
+  replacement has 1 row, data has 0
+> Error in `$<-.data.frame`(`*tmp*`, Shape, value = NA) : 
+Error: unexpected 'in' in "Error in"
+>     replacement has 1 row, data has 0
+Error: unexpected symbol in "    replacement has"
+> > data_long$Shape[grepl("Male",  data_long$Activities)] <- "Male"
+Error: unexpected '>' in ">"
+> > data_long$Shape[grepl("^Square", data_long$Activities)] <- "Female"
+Error: unexpected '>' in ">"
+> > data_long$Shape <- factor(data_long$Shape)
+Error: unexpected '>' in ">"
+> data_long$Sex <- NA
+Error in `$<-.data.frame`(`*tmp*`, Sex, value = NA) : 
+  replacement has 1 row, data has 0
+> data_long$Sex[grepl("male",  data_long$Activities)] <- "Male"
+> data_long$Sex[grepl("female", data_long$Activities)] <- "Female"
+> data_long$Sex <- factor(data_long$Sex)
+> View(calculated_variables_dataset2)
+> librrary(reshape)
+Error in librrary(reshape) : could not find function "librrary"
+> library(reshape2)
+> data_long<-melt(data=calculated_variables_dataset2,measure.vars=c("noneu","nomale","nofem")variable.name = "condition",id.vars=("Sex"))
+Error: unexpected symbol in "data_long<-melt(data=calculated_variables_dataset2,measure.vars=c("noneu","nomale","nofem")variable.name"
+> data_long<-melt(data=calculated_variables_dataset2,measure.vars=c("noneu","nomale","nofem"),variable.name = "condition",id.vars=("Sex"))
+> View(data_long)
+> dfwc <- summarySEwithin(dfw_long, measurevar="value", withinvars="condition",
++                         idvar="subject", na.rm=FALSE, conf.interval=.95)
+Error in lapply(X = X, FUN = FUN, ...) : object 'dfw_long' not found
+> dfwc <- summarySEwithin(data_long, measurevar="value", withinvars="condition",
++                         idvar="subject", na.rm=FALSE, conf.interval=.95)
+Error in FUN(X[[i]], ...) : object 'subject' not found
+> dfwc <- summarySEwithin(data_long, measurevar="value", withinvars="condition",
++                         idvar="Sex", na.rm=FALSE, conf.interval=.95)
+> ggplot(dfwc_between, aes(x=condition, y=value, group=1)) +
++     geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
++     geom_errorbar(width=.1, aes(ymin=value-se, ymax=value+se), colour="red") +
++     geom_errorbar(width=.1, aes(ymin=value-se, ymax=value+se), data=dfwc) +
++     geom_point(shape=21, size=3, fill="white") +
++     ylim(ymin,ymax)
+Error in ggplot(dfwc_between, aes(x = condition, y = value, group = 1)) : 
+  object 'dfwc_between' not found
+> ggplot(dfwc, aes(x=condition, y=value, group=1)) +
++     geom_line() +
++     geom_errorbar(width=.1, aes(ymin=value-ci, ymax=value+ci)) +
++     geom_point(shape=21, size=3, fill="white") +
++     ylim(40,60
++ ''
+Error: unexpected string constant in:
+"    ylim(40,60
+''"
+> ggplot(dfwc, aes(x=condition, y=value, group=1)) +
++     geom_line() +
++     geom_errorbar(width=.1, aes(ymin=value-ci, ymax=value+ci)) +
++     geom_point(shape=21, size=3, fill="white") +
++     ylim(40,60)
+Warning messages:
+1: Removed 3 row(s) containing missing values (geom_path). 
+2: Removed 3 rows containing missing values (geom_point). 
+> View(dfwc)
+> View(data_long)
+> dfw_long <- melt(calculated_variables_dataset2,
++                  id.vars = "Sex",
++                  measure.vars = c("noneu","nomale","nofem"),
++                  variable.name = "condition")
+> View(dfw_long)
+> View(dfwc)
+> View(dfw_long)
+> datac <- summarySEwithin(dfw_long, measurevar="value", withinvars=c("Sex","condition"))
+> datac
+     Sex condition  N     value       sd        se        ci
+1 female     noneu 52  5.269231 3.565293 0.4944171 0.9925838
+2 female    nomale 52  8.403846 5.616193 0.7788259 1.5635582
+3 female     nofem 52  7.923077 4.348610 0.6030437 1.2106607
+4   male     noneu 48  6.937500 5.154991 0.7440589 1.4968535
+5   male    nomale 48 13.604167 7.975728 1.1511971 2.3159099
+6   male     nofem 48  3.750000 3.877924 0.5597302 1.1260319
+> library(ggplot2)
+> ggplot(datac, aes(x=condition, y=value, fill=ColorScheme)) +
++     geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
++     geom_errorbar(position=position_dodge(.9), width=.25, aes(ymin=value-se, ymax=value+se)) +
++     scale_fill_manual(values=c("#CCCCCC","#FFFFFF")) +
++     scale_y_continuous(breaks=seq(1:100)) +
++     theme_bw()
+Error in FUN(X[[i]], ...) : object 'ColorScheme' not found
+> ggplot(datac, aes(x=condition, y=value, fill=ColorScheme)) +
++     +     geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
++     +     geom_errorbar(position=position_dodge(.9), width=.25, aes(ymin=value-se, ymax=value+se)) +
++     +     scale_fill_manual(values=c("#CCCCCC","#FFFFFF")) +
++     +     scale_y_continuous(breaks=seq(1:100)) +
++     +     theme_bw()
+Error: Cannot use `+.gg()` with a single argument. Did you accidentally put + on a new line?
+Run `rlang::last_error()` to see where the error occurred.
+> library(ggplot2)
+> ggplot(datac, aes(x=Shape, y=Time, fill=ColorScheme)) +
++     geom_bar(position=position_dodge(.9), colour="black", stat="identity") +
++     geom_errorbar(position=position_dodge(.9), width=.25, aes(ymin=Time-ci, ymax=Time+ci)) +
++     coord_cartesian(ylim=c(40,46)) +
++     scale_fill_manual(values=c("#CCCCCC","#FFFFFF")) +
++     scale_y_continuous(breaks=seq(1:100)) +
++     theme_bw() +
++     geom_hline(yintercept=38) 
+Error in FUN(X[[i]], ...) : object 'Shape' not found
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                                                                                                                                                                                                                                axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                                                                                                                                                                                                                axis.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                axis.title = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                legend.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                legend.title = element_text(size = 10, colour = "black"),
++                                                                                                                                                                                                                                                                plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> 
+> ttest<-t.test(data=ds, MrtSco~group, var.equal =TRUE, alternative="less")
+Error in eval(predvars, data, env) : object 'group' not found
+In addition: Warning message:
+In (function (which = dev.cur())  :
+  unable to open TIFF file 'C:/Users/hanna/Documents/barplot/activities.tiff'
+> femaleMrtsco<-c(rnorm(52, mean=27.48077, sd=7.124909))
+> maleMrtSco<-c(rnorm(48, mean=30.22917, sd=5.983095))
+> t.test(femaleMrtsco,maleMrtSco, var.equal= FALSE)
+
+	Welch Two Sample t-test
+
+data:  femaleMrtsco and maleMrtSco
+t = -3.8819, df = 97.974, p-value = 0.0001881
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -7.422365 -2.400701
+sample estimates:
+mean of x mean of y 
+ 26.07560  30.98713 
+
+> t.test(femaleMrtsco,maleMrtSco, var.equal= TRUE)
+
+	Two Sample t-test
+
+data:  femaleMrtsco and maleMrtSco
+t = -3.8667, df = 98, p-value = 0.0001985
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -7.432218 -2.390849
+sample estimates:
+mean of x mean of y 
+ 26.07560  30.98713 
+
+> var.test(femaleMrtsco,maleMrtSco)
+
+	F test to compare two variances
+
+data:  femaleMrtsco and maleMrtSco
+F = 1.2148, num df = 51, denom df = 47, p-value = 0.5017
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.6867781 2.1347559
+sample estimates:
+ratio of variances 
+          1.214848 
+
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))
+> > ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity") +scale_x_discrete(labels=c("Neutral", "Male", "Female")+xlab("Type of Acitivity") +ylab("Mean Number of Activities Participated")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '>' in ">"
+>                                                                                                                                                                                                                                                                                                                                                                                                     axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                     axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                     legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                     legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                                                                                                                                                                "
+>                                                                                                                                                                                                                                                                                                                                                                                                     plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                                                                                                                                                            plot"
+>                                                                                                                                               
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity") +scale_x_discrete(labels=c("Neutral", "Male", "Female")+xlab("Type of Acitivity") +ylab("Mean Number of Activities Participated")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                                                                                                                                                                                                                                                                                                                                                   axis.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                                                                                                                                   axis.title = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                                                                                                                                   legend.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                                                                                                                                                   legend.title = element_text(size = 10, colour = "black"),
++                                                                                                                                                                                                                                                                                                                                                                                                   plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
++                                                                                                                                             
++ ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity") +scale_x_discrete(labels=c("Neutral", "Male", "Female")+xlab("Type of Acitivity") +ylab("Mean Number of Activities Participated")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_text(size = 10, colour = "black"), plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected symbol in:
+"                                                                                                                                            
+ggplot"
+>                                                                                                                                             
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity") +scale_x_discrete(labels=c("Neutral", "Male", "Female")+xlab("Type of Acitivity") +ylab("Mean Number of Activities Participated")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_text(size = 10, colour = "black"), plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
++                                                                                                                                             
++ ''
+Error: unexpected string constant in:
+"                                                                                                                                            
+''"
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                                                                                                                                                                                                                 axis.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                 axis.title = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                 legend.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                 legend.title = element_text(size = 10, colour = "black"),
++                                                                                                                                                                                                                                                                 plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+scale_x_discrete(labels=c("Neutral", "Male", "Female")+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                                                                                                                                                                                                                 axis.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                 axis.title = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                 legend.text = element_text(size = 10, colour = "black"), 
++                                                                                                                                                                                                                                                                 legend.title = element_text(size = 10, colour = "black"),
++                                                                                                                                                                                                                                                                 plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
++ 
++ ''
+Error: unexpected string constant in:
+"
+''"
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+scale_x_discrete(labels=c("Neutral", "Male", "Female"))+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_text(size = 10, colour = "black"),plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+scale_x_discrete(labels=c("Neutral", "Male", "Female"))+theme(legend.title=element_blank())+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_text(size = 10, colour = "black"),plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+scale_x_discrete(labels=c("Neutral", "Male", "Female"))+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_blank(),plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> barplot2<-ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+scale_x_discrete(labels=c("Neutral", "Male", "Female"))+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_text(size = 10, colour = "black"),plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> barplot2+scale_fill_discrete(labels="Female","Male")
+> barplot2+scale_fill_discrete(name="",labels="Female","Male")
+> barplot2+scale_fill_discrete(labels="Female","Male")
+> barplot2+scale_fill_discrete(labels="Female","Male","")
+> barplot2+scale_fill_discrete(labels="Female","Male","   ")
+> barplot2+scale_fill_discrete(labels="Female","  ","Male")
+> barplot2+scale_fill_discrete(name="Sex",labels="Female","Male")
+> ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+scale_x_discrete(labels=c("Neutral", "Male", "Female"))+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_blank(),plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> barplot2<-ggplot(datac, aes(x=condition, y=value, fill=Sex))+geom_bar(position=position_dodge(0.9), colour="black",stat="identity")+scale_x_discrete(labels=c("Neutral", "Male", "Female"))+geom_errorbar(position=position_dodge(.9),width=.25, aes(ymin=value-se,ymax=value+se))+theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),axis.text = element_text(size = 10, colour = "black"), axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"), legend.title = element_blank(),plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> barplot2+ylab("Mean Number of Spatial Activities")+xlab("Type of Spatial Activity")
+> barplot2 + scale_fill_discrete(labels=c("Female","Male"))
+> barplot2+ylab("Mean Number of Spatial Activities")+xlab("Type of Spatial Activity")+scale_fill_discrete(labels=c("Female","Male"))
+> >
+Error: unexpected '>' in ">"
+> mentalrotationplot<-ggplot(ds,aes(x=Sex, y=MrtSco ))+geom_bar(position=position_dodge(.5),width=0.5,stat="identity",colour="dark grey")+xlab('')+ylab('Mean Score on Mental Rotation Task')+geom_errorbar(aes(ymin=MrtSco-se,ymax=MrtSco+se), width=.2,position=position_dodge(.9)+scale_y_continuous(expand = c(0,0))+theme_set(theme_light(base_size = 20))+ theme(panel.border = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(size = 1, linetype = "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"),axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black"),  legend.title = element_text(size = 10, colour = "black")
++ ''
+Error: unexpected string constant in:
+"= "solid", colour = "grey"), axis.text = element_text(size = 10, colour = "black"),axis.title = element_text(size = 10, colour = "black"), legend.text = element_text(size = 10, colour = "black
+''"
+> mentalrotationplot
+Error: object 'mentalrotationplot' not found
+> View(bargraph_base)
+> View(MRT.plot)
+> MRT.plot
+> ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "black") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> MRT.plot
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "dark grey") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "dark grey") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> MRT.plot
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "black") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> MRT.plot
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") + scale_x_discrete(labels=c("Female,"Male"))+
+Error: unexpected symbol in:
+"MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
+    geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") + scale_x_discrete(labels=c("Female,"Male"
+> xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++ geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                  position=position_dodge(.9), colour = "black") +
++                  scale_y_continuous(expand = c(0,0)) +
++ theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++     axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++     axis.text = element_text(size = 10, colour = "black"), 
++     axis.title = element_text(size = 10, colour = "black"), 
++     legend.text = element_text(size = 10, colour = "black"), 
++     legend.title = element_text(size = 10, colour = "black"),
++     plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error in xlab("") + ylab("Mean Score on Mental Rotation Task") : 
+  non-numeric argument to binary operator
+> 
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") +
++     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                   position=position_dodge(.9), colour = "black") +
++     scale_y_continuous(expand = c(0,0)) +
++     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                    axis.text = element_text(size = 10, colour = "black"), 
++                                                    axis.title = element_text(size = 10, colour = "black"), 
++                                                    legend.text = element_text(size = 10, colour = "black"), 
++                                                    legend.title = element_text(size = 10, colour = "black"),
++                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+> 
+> 
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco) + 
++                       geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") +
++                       xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++                       geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                                     position=position_dodge(.9), colour = "black") +
++                       scale_y_continuous(expand = c(0,0)) +
++                       theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                                      axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                      axis.text = element_text(size = 10, colour = "black"), 
++                                                                      axis.title = element_text(size = 10, colour = "black"), 
++                                                                      legend.text = element_text(size = 10, colour = "black"), 
++                                                                      legend.title = element_text(size = 10, colour = "black"),
++                                                                      plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
++                   
++ MRT.plot
+Error: unexpected symbol in:
+"                  
+MRT.plot"
+> MRT.plot
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco) + 
++                       geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") +
++                       xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++                       geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                                     position=position_dodge(.9), colour = "black") +
++                       scale_y_continuous(expand = c(0,0)) +
++                       theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                                      axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                      axis.text = element_text(size = 10, colour = "black"), 
++                                                                      axis.title = element_text(size = 10, colour = "black"), 
++                                                                      legend.text = element_text(size = 10, colour = "black"), 
++                                                                      legend.title = element_text(size = 10, colour = "black"),
++                                                                      plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
++                   
++ ''
+Error: unexpected string constant in:
+"                  
+''"
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill=Sex) + 
++                       geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") +
++                       xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++                       geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                                     position=position_dodge(.9), colour = "black") +
++                       scale_y_continuous(expand = c(0,0)) +
++                       theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                                      axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
++                                                                      axis.text = element_text(size = 10, colour = "black"), 
++                                                                      axis.title = element_text(size = 10, colour = "black"), 
++                                                                      legend.text = element_text(size = 10, colour = "black"), 
++                                                                      legend.title = element_text(size = 10, colour = "black"),
++                                                                      plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
++                   
++ 
++ ''
+Error: unexpected string constant in:
+"
+''"
+> MRT.plot<- ggplot(ds, aes(x=Sex, y=MrtSco, fill = as.factor(Sex))) + 
++     +     geom_bar(stat="identity", width = 0.5, position=position_dodge(.5), colour = "black") +
++     +     xlab('') + ylab('Mean Score on Mental Rotation Task')  +
++     +     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
++                         +                   position=position_dodge(.9), colour = "black") +
+Error: unexpected '=' in:
+"    +     geom_errorbar(aes(ymin=MrtSco-se, ymax=MrtSco+se), width=.1,
+                        +                   position="
+>     +     scale_y_continuous(expand = c(0,0)) +
++     +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
++                                                          +                                                    axis.line = element_line(size = 1, linetype = "solid", colour = "grey"),
+Error: unexpected '=' in:
+"    +     theme_set(theme_light(base_size = 20)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
+                                                         +                                                    axis.line ="
+>                                                          +                                                    axis.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    axis.title = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    axis.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.text = element_text(size = 10, colour = "black"), 
+Error: unexpected ',' in "                                                         +                                                    legend.text = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    legend.title = element_text(size = 10, colour = "black"),
+Error: unexpected ',' in "                                                         +                                                    legend.title = element_text(size = 10, colour = "black"),"
+>                                                          +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))
+Error: unexpected ')' in "                                                         +                                                    plot.title = element_text(hjust = 0.5, size = 12, colour = "black"))"
+> ''
+[1] ""
+> 
+> MRT.plot
+> MRT.plot+scale_x_discrete(labels=c("Female","Male"))+scale_fill_discrete(labels="")
+> MRT.plot+scale_x_discrete(labels=c("Female","Male"))+scale_fill_discrete(name=""labels="")
+Error: unexpected symbol in "MRT.plot+scale_x_discrete(labels=c("Female","Male"))+scale_fill_discrete(name=""labels"
+> MRT.plot+scale_x_discrete(labels=c("Female","Male"))+scale_fill_discrete(name="",labels="")
+> MRT.plot+scale_x_discrete(labels=c("Female","Male"))+ theme(legend.position="none")
+> save.image("~/MRS/MRS.RData")
